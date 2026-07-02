@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ============================================================
+     THE LOCAL AI DEPLOYMENT HARDENING CHECKLIST
+     Free. No email gate. Printable. Share it.
+     Companion page to joeyvictorino.com — same design system.
+     ============================================================ -->
+
+<title>The Local AI Deployment Hardening Checklist — Joey Victorino</title>
+<meta name="description" content="A free, no-email-required hardening checklist for local AI deployments: Ollama, vLLM, llama.cpp, Open WebUI, Chroma, Qdrant, model artifacts, and the evidence trail. 40 checks across 6 domains.">
+<meta name="author" content="Joey Victorino">
+<link rel="canonical" href="https://joeyvictorino.com/checklist.html">
+
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://joeyvictorino.com/checklist.html">
+<meta property="og:title" content="The Local AI Deployment Hardening Checklist">
+<meta property="og:description" content="40 checks across 6 domains. Free, no email gate, printable. Ollama, vLLM, llama.cpp, vector stores, model artifacts, evidence.">
+<meta property="og:image" content="https://joeyvictorino.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0A0A0B">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* Design tokens — same system as index.html */
+:root{
+  --ink:#0A0A0B; --char:#16161A; --paper:#EDEDE8;
+  --muted:rgba(237,237,232,0.64); --faint:rgba(237,237,232,0.42);
+  --hair:rgba(237,237,232,0.10); --hair-2:rgba(237,237,232,0.18);
+  --signal:#4ADE80; --signal-dim:rgba(74,222,128,0.55);
+  --step--1:clamp(0.78rem,0.74rem + 0.18vw,0.89rem);
+  --step-0:clamp(1rem,0.95rem + 0.25vw,1.125rem);
+  --step-1:clamp(1.25rem,1.16rem + 0.45vw,1.5rem);
+  --step-2:clamp(1.56rem,1.4rem + 0.8vw,2rem);
+  --step-3:clamp(1.95rem,1.66rem + 1.45vw,2.8rem);
+  --ease-out:cubic-bezier(0.22,1,0.36,1);
+}
+*{ box-sizing:border-box; overflow-wrap:break-word; }
+html{ scroll-behavior:smooth; }
+body{
+  margin:0; background:var(--ink); color:var(--paper);
+  font-family:'Inter',system-ui,sans-serif; font-size:var(--step-0);
+  line-height:1.7; -webkit-font-smoothing:antialiased;
+}
+::selection{ background:var(--signal); color:var(--ink); }
+:focus-visible{ outline:1.5px solid var(--signal); outline-offset:3px; }
+
+.wrap{ max-width:52rem; margin:0 auto; padding:0 1.5rem; }
+.display{
+  font-family:'Fraunces',Georgia,serif; font-weight:400;
+  font-variation-settings:'opsz' 144; line-height:1.1; letter-spacing:-0.015em;
+  margin:0;
+}
+.mono{ font-family:'JetBrains Mono',ui-monospace,monospace; }
+.mono-label{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:var(--step--1); letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--faint); margin:0;
+}
+.hairline{ border-top:1px solid var(--hair); }
+a{ color:var(--paper); }
+a.text-link{
+  border-bottom:1px solid var(--hair-2); text-decoration:none;
+  transition:color .35s var(--ease-out), border-color .35s var(--ease-out);
+}
+a.text-link:hover{ color:var(--signal); border-color:var(--signal-dim); }
+
+/* grain */
+.grain{
+  position:fixed; inset:0; pointer-events:none; z-index:60; opacity:0.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* checklist items — real checkboxes; state persists nowhere, by design */
+.check{
+  display:grid; grid-template-columns:auto auto 1fr; gap:1rem;
+  padding:1.15rem 0; border-top:1px solid var(--hair);
+  align-items:start;
+}
+.check:last-of-type{ border-bottom:1px solid var(--hair); }
+.check input[type=checkbox]{
+  appearance:none; -webkit-appearance:none;
+  width:1.05rem; height:1.05rem; margin-top:0.3rem;
+  border:1px solid var(--hair-2); background:transparent; cursor:pointer;
+  transition:border-color .3s var(--ease-out), background .3s var(--ease-out);
+}
+.check input[type=checkbox]:checked{
+  background:var(--signal); border-color:var(--signal);
+}
+.check input[type=checkbox]:checked + .cid{ color:var(--signal); }
+.cid{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:0.78rem; color:var(--faint); padding-top:0.35rem; white-space:nowrap;
+}
+.check label{ cursor:pointer; }
+.check b{ font-weight:600; color:var(--paper); }
+.check .why{ display:block; margin-top:0.35rem; color:var(--muted); font-size:0.95rem; }
+.check code{
+  font-family:'JetBrains Mono',ui-monospace,monospace; font-size:0.82em;
+  background:var(--char); border:1px solid var(--hair);
+  padding:0.1em 0.4em; color:var(--paper);
+}
+
+.domain{ padding:4.5rem 0 2.5rem; }
+.domain h2{ font-size:var(--step-2); max-width:24ch; }
+.domain .intro{ color:var(--muted); max-width:68ch; }
+
+.btn{
+  display:inline-flex; align-items:center; gap:0.75rem;
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:var(--step--1); letter-spacing:0.1em; text-transform:uppercase;
+  padding:1rem 1.75rem; border:1px solid var(--hair-2);
+  color:var(--paper); text-decoration:none; background:transparent; cursor:pointer;
+  transition:border-color .4s var(--ease-out), color .4s var(--ease-out),
+             background .4s var(--ease-out);
+}
+.btn:hover{ border-color:var(--signal-dim); color:var(--signal); }
+.btn-primary{ background:var(--signal); border-color:var(--signal); color:var(--ink); font-weight:500; }
+.btn-primary:hover{ background:#5fe694; border-color:#5fe694; color:var(--ink); }
+
+/* print: black on white, no chrome */
+@media print{
+  body{ background:#fff; color:#111; }
+  .grain, .no-print{ display:none !important; }
+  .check, .hairline{ border-color:#ddd; }
+  .check b, a{ color:#111; }
+  .check .why, .domain .intro{ color:#444; }
+  .cid{ color:#888; }
+  .check code{ background:#f3f3f3; border-color:#ddd; color:#111; }
+  .mono-label{ color:#888; }
+}
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  .btn, a.text-link, .check input[type=checkbox]{ transition:none; }
+}
+</style>
+</head>
+
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- header -->
+<header class="no-print" style="padding:1.5rem 0;">
+  <div class="wrap" style="display:flex; justify-content:space-between; align-items:center; gap:1rem;">
+    <a href="/" class="mono" style="font-size:0.8rem; letter-spacing:0.22em; text-decoration:none;">JOEY&nbsp;VICTORINO</a>
+    <span class="mono-label">Free&nbsp;Resource&nbsp;&middot;&nbsp;No&nbsp;Email&nbsp;Required</span>
+  </div>
+</header>
+
+<main>
+  <!-- title -->
+  <section class="wrap" style="padding:4rem 1.5rem 3rem;">
+    <p class="mono-label" style="margin-bottom:1.5rem;">Operator&nbsp;//&nbsp;JV&nbsp;&mdash;&nbsp;Field&nbsp;Document&nbsp;001</p>
+    <h1 class="display" style="font-size:var(--step-3); max-width:22ch;">
+      The Local AI Deployment Hardening Checklist
+    </h1>
+    <p style="color:var(--muted); max-width:68ch; margin-top:1.75rem;">
+      Forty checks across six domains, written from real deployments and real
+      incident reviews. It covers the stack this community actually runs &mdash;
+      Ollama, llama.cpp, vLLM, Open WebUI, Chroma, Qdrant &mdash; not an
+      abstract "enterprise AI platform."
+    </p>
+    <p style="color:var(--muted); max-width:68ch; margin-top:1rem;">
+      No email gate. No PDF funnel. Print it (<span class="mono" style="font-size:0.85em;">Cmd/Ctrl+P</span> renders
+      a clean black-on-white copy), share it, or open a PR if I got something wrong.
+      If your team clears all forty, you're ahead of most production deployments I've reviewed.
+    </p>
+    <div class="no-print" style="margin-top:2rem; display:flex; gap:1rem; flex-wrap:wrap;">
+      <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+      <a href="/#contact" class="btn">Questions? Talk to me</a>
+    </div>
+  </section>
+
+  <!-- ============ DOMAIN A — INFERENCE ENDPOINTS ============ -->
+  <section class="wrap domain hairline">
+    <p class="mono-label">&sect;A&nbsp;&mdash;&nbsp;Inference&nbsp;Endpoints</p>
+    <h2 class="display" style="margin-top:1rem;">The server you forgot is a server.</h2>
+    <p class="intro" style="margin-top:1rem;">Most local-AI exposure starts here: an inference API bound to all interfaces with no authentication, because that's what the quickstart did.</p>
+
+    <div style="margin-top:2rem;">
+      <div class="check"><input type="checkbox" id="a1"><span class="cid">A-01</span><label for="a1"><b>Bind to loopback unless you have a reason not to.</b><span class="why">Ollama serves on <code>11434</code>, llama.cpp's server on <code>8080</code>, vLLM on <code>8000</code>. Confirm each binds <code>127.0.0.1</code>, not <code>0.0.0.0</code>. Check with <code>ss -tlnp</code> or <code>lsof -iTCP -sTCP:LISTEN</code>.</span></label></div>
+      <div class="check"><input type="checkbox" id="a2"><span class="cid">A-02</span><label for="a2"><b>No inference API is directly reachable from the internet.</b><span class="why">Search your own egress IPs on Shodan/Censys. Thousands of open Ollama and llama.cpp endpoints are indexed at any given time — don't be one of them.</span></label></div>
+      <div class="check"><input type="checkbox" id="a3"><span class="cid">A-03</span><label for="a3"><b>Auth in front of every OpenAI-compatible API.</b><span class="why">vLLM supports <code>--api-key</code>; for servers that don't, put a reverse proxy (Caddy, nginx, Traefik) with token auth or mTLS in front. "It's internal" is not auth.</span></label></div>
+      <div class="check"><input type="checkbox" id="a4"><span class="cid">A-04</span><label for="a4"><b>Web UIs require login and signups are disabled.</b><span class="why">Open WebUI, SillyTavern, text-generation-webui: confirm auth is on, default admin credentials are rotated, and open registration is off.</span></label></div>
+      <div class="check"><input type="checkbox" id="a5"><span class="cid">A-05</span><label for="a5"><b>No blanket port-forwards or "temporary" tunnels.</b><span class="why">Audit router port-forwards, cloudflared/ngrok/Tailscale Funnel configs. Temporary tunnels have a way of becoming permanent and forgotten.</span></label></div>
+      <div class="check"><input type="checkbox" id="a6"><span class="cid">A-06</span><label for="a6"><b>Admin and inference planes are separated.</b><span class="why">Endpoints that can pull/delete models (e.g. Ollama's <code>/api/pull</code>, <code>/api/delete</code>) shouldn't share exposure with endpoints that only need <code>/v1/chat/completions</code>.</span></label></div>
+      <div class="check"><input type="checkbox" id="a7"><span class="cid">A-07</span><label for="a7"><b>Rate limits exist, even internally.</b><span class="why">One runaway script can starve the GPU for everyone and bury real usage in noise. Per-key limits at the proxy are cheap.</span></label></div>
+    </div>
+  </section>
+
+  <!-- ============ DOMAIN B — RAG & VECTOR STORES ============ -->
+  <section class="wrap domain hairline">
+    <p class="mono-label">&sect;B&nbsp;&mdash;&nbsp;RAG&nbsp;&amp;&nbsp;Vector&nbsp;Stores</p>
+    <h2 class="display" style="margin-top:1rem;">Your corpus is the crown jewels, embedded.</h2>
+    <p class="intro" style="margin-top:1rem;">RAG quietly concentrates your most sensitive documents into one queryable store — then answers anyone who can reach it.</p>
+
+    <div style="margin-top:2rem;">
+      <div class="check"><input type="checkbox" id="b1"><span class="cid">B-01</span><label for="b1"><b>The vector store requires authentication.</b><span class="why">Chroma historically shipped with none; Qdrant's API key and Weaviate's anonymous-access flag are opt-in. Verify with an unauthenticated request from another host — it should fail.</span></label></div>
+      <div class="check"><input type="checkbox" id="b2"><span class="cid">B-02</span><label for="b2"><b>You know exactly what got indexed.</b><span class="why">Keep a manifest of ingested sources. Recursive folder ingestion loves to swallow <code>.env</code> files, HR folders, and that one spreadsheet of customer data.</span></label></div>
+      <div class="check"><input type="checkbox" id="b3"><span class="cid">B-03</span><label for="b3"><b>Access control matches the source documents.</b><span class="why">If a document was restricted in SharePoint, its chunks must be restricted in retrieval. Collection-level ACLs are rarely enough; you may need per-document filtering at query time.</span></label></div>
+      <div class="check"><input type="checkbox" id="b4"><span class="cid">B-04</span><label for="b4"><b>Embeddings are treated as sensitive data.</b><span class="why">Embedding inversion recovers meaningful text from vectors. Encrypt at rest, and don't ship production vectors to third-party embedding APIs you haven't cleared.</span></label></div>
+      <div class="check"><input type="checkbox" id="b5"><span class="cid">B-05</span><label for="b5"><b>There is a deletion path.</b><span class="why">When a source document is deleted or a right-to-erasure request lands, you can find and remove its chunks and vectors — and prove you did.</span></label></div>
+      <div class="check"><input type="checkbox" id="b6"><span class="cid">B-06</span><label for="b6"><b>Retrieved context is bounded and logged.</b><span class="why">Log which chunks each query pulled. Without it you cannot answer the only question that matters after an incident: what did it leak, and to whom?</span></label></div>
+      <div class="check"><input type="checkbox" id="b7"><span class="cid">B-07</span><label for="b7"><b>Untrusted documents are treated as hostile input.</b><span class="why">Indirect prompt injection lives in your corpus: a poisoned PDF instructs the model, the model obeys. Isolate untrusted sources and strip active content on ingest.</span></label></div>
+    </div>
+  </section>
+
+  <!-- ============ DOMAIN C — MODEL ARTIFACTS ============ -->
+  <section class="wrap domain hairline">
+    <p class="mono-label">&sect;C&nbsp;&mdash;&nbsp;Model&nbsp;Artifacts</p>
+    <h2 class="display" style="margin-top:1rem;">Weights are executables with better PR.</h2>
+    <p class="intro" style="margin-top:1rem;">You would never run a random binary from the internet as root. A model file can be the same thing wearing a lab coat.</p>
+
+    <div style="margin-top:2rem;">
+      <div class="check"><input type="checkbox" id="c1"><span class="cid">C-01</span><label for="c1"><b>Prefer safetensors and GGUF over pickle formats.</b><span class="why">Legacy <code>.pt</code>/<code>.bin</code> pickle files can execute arbitrary code on load. If you must load one, scan it (picklescan or equivalent) and load with <code>weights_only=true</code> where supported.</span></label></div>
+      <div class="check"><input type="checkbox" id="c2"><span class="cid">C-02</span><label for="c2"><b>Pin models to exact revisions and verify hashes.</b><span class="why">Pull by commit hash, not by <code>main</code>. Record the SHA-256 of every artifact you deploy. A repo can change under a stable-looking name.</span></label></div>
+      <div class="check"><input type="checkbox" id="c3"><span class="cid">C-03</span><label for="c3"><b>Provenance is checked before the download.</b><span class="why">Uploader account age, org verification, download counts, community reports. Typosquatted model repos are a real distribution channel.</span></label></div>
+      <div class="check"><input type="checkbox" id="c4"><span class="cid">C-04</span><label for="c4"><b>Production pulls from an internal mirror, not the public hub.</b><span class="why">One vetted copy, hash-verified, served internally. Production boxes shouldn't have a reason to talk to huggingface.co at 2 a.m.</span></label></div>
+      <div class="check"><input type="checkbox" id="c5"><span class="cid">C-05</span><label for="c5"><b>Licenses are reviewed for your actual use.</b><span class="why">Llama-family, research-only, and non-commercial licenses differ in ways your counsel cares about. Know what you're running before a customer asks.</span></label></div>
+      <div class="check"><input type="checkbox" id="c6"><span class="cid">C-06</span><label for="c6"><b>Custom code paths are disabled unless audited.</b><span class="why"><code>trust_remote_code=true</code> means "run this repo's Python on my GPU box." Default it to false; audit the exceptions.</span></label></div>
+      <div class="check"><input type="checkbox" id="c7"><span class="cid">C-07</span><label for="c7"><b>Fine-tunes and LoRAs get the same scrutiny as base models.</b><span class="why">Adapters are small, shared casually, and can carry backdoored behavior. Track their lineage like any other artifact.</span></label></div>
+    </div>
+  </section>
+
+  <!-- ============ DOMAIN D — HOST & NETWORK ============ -->
+  <section class="wrap domain hairline">
+    <p class="mono-label">&sect;D&nbsp;&mdash;&nbsp;Host&nbsp;&amp;&nbsp;Network</p>
+    <h2 class="display" style="margin-top:1rem;">The GPU box is a high-value target.</h2>
+    <p class="intro" style="margin-top:1rem;">It holds your models, your corpus, and often your credentials — and it was probably set up in a hurry.</p>
+
+    <div style="margin-top:2rem;">
+      <div class="check"><input type="checkbox" id="d1"><span class="cid">D-01</span><label for="d1"><b>Inference runs as an unprivileged user or container.</b><span class="why">No <code>--privileged</code>, no root, no docker socket mounted inside. Use <code>--gpus</code> device passthrough, not god-mode.</span></label></div>
+      <div class="check"><input type="checkbox" id="d2"><span class="cid">D-02</span><label for="d2"><b>The AI segment is isolated from the crown-jewel network.</b><span class="why">Separate VLAN or security group. The box that runs community models should not have a flat path to your database servers.</span></label></div>
+      <div class="check"><input type="checkbox" id="d3"><span class="cid">D-03</span><label for="d3"><b>Egress is restricted and monitored.</b><span class="why">Inference servers rarely need outbound internet. Default-deny egress turns "model exfiltrates data" from silent to visible.</span></label></div>
+      <div class="check"><input type="checkbox" id="d4"><span class="cid">D-04</span><label for="d4"><b>Drivers and runtimes are on a patch cadence.</b><span class="why">GPU drivers, CUDA, container toolkits, and the inference servers themselves all carry CVEs. "It works, don't touch it" is how boxes stay vulnerable for years.</span></label></div>
+      <div class="check"><input type="checkbox" id="d5"><span class="cid">D-05</span><label for="d5"><b>Secrets are not in environment dumps or compose files.</b><span class="why">API keys and DB credentials belong in a secrets manager. <code>docker inspect</code> shouldn't be a credential store.</span></label></div>
+      <div class="check"><input type="checkbox" id="d6"><span class="cid">D-06</span><label for="d6"><b>Disk encryption on any box holding models or corpora.</b><span class="why">Workstations and homelab-grade servers get stolen and decommissioned carelessly. Full-disk encryption is table stakes.</span></label></div>
+    </div>
+  </section>
+
+  <!-- ============ DOMAIN E — ACCESS & USAGE ============ -->
+  <section class="wrap domain hairline">
+    <p class="mono-label">&sect;E&nbsp;&mdash;&nbsp;Access&nbsp;&amp;&nbsp;Usage</p>
+    <h2 class="display" style="margin-top:1rem;">Know who asked, and what for.</h2>
+    <p class="intro" style="margin-top:1rem;">Private AI removes the vendor's abuse controls. Whatever governance you want now has to be yours.</p>
+
+    <div style="margin-top:2rem;">
+      <div class="check"><input type="checkbox" id="e1"><span class="cid">E-01</span><label for="e1"><b>Every request is attributable to a person or service.</b><span class="why">Per-user or per-service API keys at the gateway. A single shared key means your audit trail is fiction.</span></label></div>
+      <div class="check"><input type="checkbox" id="e2"><span class="cid">E-02</span><label for="e2"><b>A written policy says what data may enter prompts.</b><span class="why">Short and real beats long and ignored: what's allowed, what's banned (credentials, regulated data), who to ask.</span></label></div>
+      <div class="check"><input type="checkbox" id="e3"><span class="cid">E-03</span><label for="e3"><b>Prompt/response logging has an explicit retention decision.</b><span class="why">Logging everything forever creates a new sensitive corpus; logging nothing blinds incident response. Decide deliberately, document the decision.</span></label></div>
+      <div class="check"><input type="checkbox" id="e4"><span class="cid">E-04</span><label for="e4"><b>Tool-calling and agent permissions are least-privilege.</b><span class="why">If the model can call tools, enumerate them, scope their credentials, and require confirmation for destructive actions. An agent with your shell is an intern with root.</span></label></div>
+      <div class="check"><input type="checkbox" id="e5"><span class="cid">E-05</span><label for="e5"><b>Offboarding revokes AI access too.</b><span class="why">API keys, WebUI accounts, and VPN routes to the inference segment are part of the leaver checklist.</span></label></div>
+      <div class="check"><input type="checkbox" id="e6"><span class="cid">E-06</span><label for="e6"><b>Someone owns this system by name.</b><span class="why">Not a committee. One person who can answer "what changed on the AI stack last month?" without a meeting.</span></label></div>
+    </div>
+  </section>
+
+  <!-- ============ DOMAIN F — EVIDENCE & RESPONSE ============ -->
+  <section class="wrap domain hairline">
+    <p class="mono-label">&sect;F&nbsp;&mdash;&nbsp;Evidence&nbsp;&amp;&nbsp;Response</p>
+    <h2 class="display" style="margin-top:1rem;">If you can't prove it, it didn't happen.</h2>
+    <p class="intro" style="margin-top:1rem;">The auditor and the attacker are both coming eventually. These checks decide whether you have answers or apologies.</p>
+
+    <div style="margin-top:2rem;">
+      <div class="check"><input type="checkbox" id="f1"><span class="cid">F-01</span><label for="f1"><b>You can produce a full inventory of AI assets on demand.</b><span class="why">Every inference server, UI, vector store, model artifact (with hash), and dataset — in one document that's newer than last quarter.</span></label></div>
+      <div class="check"><input type="checkbox" id="f2"><span class="cid">F-02</span><label for="f2"><b>Logs leave the box.</b><span class="why">Access, auth, and inference logs ship to central storage the GPU host can't rewrite. Local-only logs die with the incident.</span></label></div>
+      <div class="check"><input type="checkbox" id="f3"><span class="cid">F-03</span><label for="f3"><b>Model lineage is recorded for every deployment.</b><span class="why">Which model, which revision, which quant, serving which app, since when. Six months from now, "what was running in March?" must have an answer.</span></label></div>
+      <div class="check"><input type="checkbox" id="f4"><span class="cid">F-04</span><label for="f4"><b>The incident plan has an AI page.</b><span class="why">Who can pull the plug on inference, how to snapshot the box, what "compromised model" containment looks like. Decide before 3 a.m., not at it.</span></label></div>
+      <div class="check"><input type="checkbox" id="f5"><span class="cid">F-05</span><label for="f5"><b>Configs are in version control.</b><span class="why">Compose files, proxy configs, gateway rules. Reproducibility is also forensics: the diff is the timeline.</span></label></div>
+      <div class="check"><input type="checkbox" id="f6"><span class="cid">F-06</span><label for="f6"><b>An outside party has checked your perimeter this year.</b><span class="why">A scan of your own attack surface by someone who didn't build it. Internal certainty is where exposure hides.</span></label></div>
+      <div class="check"><input type="checkbox" id="f7"><span class="cid">F-07</span><label for="f7"><b>You re-run this checklist on a schedule.</b><span class="why">Quarterly, calendared, owned (see E-06). Drift is the default state of every system.</span></label></div>
+    </div>
+  </section>
+
+  <!-- closing -->
+  <section class="wrap hairline" style="padding:4.5rem 1.5rem 5rem;">
+    <p class="mono-label">Colophon</p>
+    <p style="color:var(--muted); max-width:68ch; margin-top:1.5rem;">
+      Written by <a href="/" class="text-link">Joey Victorino</a>, founder of
+      <a href="https://qompute.ai" class="text-link">Qompute AI</a>. This document is
+      free to share and reproduce with attribution. Corrections and additions are
+      welcome &mdash; the stack moves fast and so should this list.
+    </p>
+    <p style="color:var(--muted); max-width:68ch; margin-top:1rem;">
+      If you're deploying at a scale where a mistake is expensive, that's the work I do.
+    </p>
+    <div class="no-print" style="margin-top:2rem; display:flex; gap:1rem; flex-wrap:wrap;">
+      <a href="/#contact" class="btn btn-primary">Book a Readiness Call</a>
+      <a href="/" class="btn">Back to the practice</a>
+    </div>
+  </section>
+</main>
+
+<footer class="hairline no-print">
+  <div class="wrap" style="padding:2.5rem 1.5rem; display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;">
+    <p class="mono" style="font-size:0.68rem; letter-spacing:0.18em; color:var(--faint); margin:0;">&copy; 2026 JOEY VICTORINO &middot; FIELD DOCUMENT 001 &middot; V1.0</p>
+    <p class="mono" style="font-size:0.68rem; letter-spacing:0.18em; color:var(--faint); margin:0;">OPERATOR&nbsp;//&nbsp;JV</p>
+  </div>
+</footer>
+
+</body>
+</html>

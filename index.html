@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ============================================================
+     JOEYVICTORINO.COM — Private AI Deployment Security
+     Single-file build. Restrained operator luxury.
+     Palette: near-black / charcoal / off-white / signal-green.
+     Motion: Intersection Observer reveals, light hero parallax,
+             magnetic CTAs. All content renders without JS.
+     ============================================================ -->
+
+<title>Joey Victorino — Private AI Deployment Security</title>
+<meta name="description" content="Advisory for CISOs, founders, and technical executives deploying AI on their own infrastructure. Private AI is not automatically secure. Joey Victorino, founder of Qompute AI.">
+<meta name="author" content="Joey Victorino">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://joeyvictorino.com/">
+
+<!-- OpenGraph / Twitter -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Joey Victorino">
+<meta property="og:url" content="https://joeyvictorino.com/">
+<meta property="og:title" content="Joey Victorino — Private AI Deployment Security">
+<meta property="og:description" content="Private AI is not automatically secure. Advisory for teams that cannot afford to guess.">
+<meta property="og:image" content="https://joeyvictorino.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Joey Victorino — Private AI Deployment Security">
+<meta name="twitter:description" content="Private AI is not automatically secure. Advisory for teams that cannot afford to guess.">
+<meta name="theme-color" content="#0A0A0B">
+
+<!-- JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Joey Victorino — Private AI Deployment Security",
+  "url": "https://joeyvictorino.com/",
+  "founder": { "@type": "Person", "name": "Joey Victorino" },
+  "description": "Private AI deployment security advisory for CISOs, security leaders, founders, and technical executives.",
+  "serviceType": [
+    "Private AI Deal Desk",
+    "Deployment Readiness Sprint",
+    "AI Asset Exposure Review",
+    "Fractional AI Security Officer"
+  ]
+}
+</script>
+
+<!-- Remove .no-js immediately so reveal styles only apply when JS runs.
+     Without JS, every section renders fully visible. -->
+<script>document.documentElement.classList.remove('no-js');</script>
+
+<!-- Fonts: Fraunces (display serif) / Inter (grotesque body) / JetBrains Mono (labels) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Tailwind Play CDN (layout utilities only; the design system lives in :root below) -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink:   '#0A0A0B',
+          char:  '#16161A',
+          paper: '#EDEDE8',
+          signal:'#4ADE80',
+        },
+        fontFamily: {
+          serif: ['Fraunces','Georgia','serif'],
+          sans:  ['Inter','system-ui','sans-serif'],
+          mono:  ['"JetBrains Mono"','ui-monospace','monospace'],
+        },
+      },
+    },
+  }
+</script>
+
+<style>
+/* ==============================================================
+   DESIGN TOKENS
+   Modular scale (~1.25 minor third), fluid via clamp.
+   Whitespace is the luxury signal — space tokens run generous.
+   ============================================================== */
+:root{
+  /* color */
+  --ink:    #0A0A0B;
+  --char:   #16161A;
+  --paper:  #EDEDE8;
+  --muted:  rgba(237,237,232,0.64);
+  --faint:  rgba(237,237,232,0.42);
+  --hair:   rgba(237,237,232,0.10);
+  --hair-2: rgba(237,237,232,0.18);
+  --signal: #4ADE80;
+  --signal-dim: rgba(74,222,128,0.55);
+
+  /* type scale */
+  --step--1: clamp(0.78rem, 0.74rem + 0.18vw, 0.89rem);   /* mono labels  */
+  --step-0:  clamp(1.00rem, 0.95rem + 0.25vw, 1.125rem);  /* body         */
+  --step-1:  clamp(1.25rem, 1.16rem + 0.45vw, 1.50rem);   /* lead         */
+  --step-2:  clamp(1.56rem, 1.40rem + 0.80vw, 2.00rem);   /* h3           */
+  --step-3:  clamp(1.95rem, 1.66rem + 1.45vw, 2.80rem);   /* h2           */
+  --step-4:  clamp(2.44rem, 1.90rem + 2.70vw, 4.20rem);   /* h1           */
+
+  /* space scale */
+  --sp-1: clamp(0.5rem, 0.45rem + 0.25vw, 0.75rem);
+  --sp-2: clamp(1rem, 0.9rem + 0.5vw, 1.5rem);
+  --sp-3: clamp(1.5rem, 1.3rem + 1vw, 2.5rem);
+  --sp-4: clamp(2.5rem, 2rem + 2.5vw, 5rem);
+  --sp-5: clamp(4rem, 3rem + 5vw, 9rem);
+
+  /* motion — buttery, physics-like */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur: 0.9s;
+}
+
+/* ---------- base ---------- */
+html{ scroll-behavior:smooth; }
+body{
+  background: var(--ink);
+  color: var(--paper);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: var(--step-0);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+::selection{ background: var(--signal); color: var(--ink); }
+*{ overflow-wrap: break-word; }
+
+/* Visible focus for keyboard users only */
+:focus-visible{ outline: 1.5px solid var(--signal); outline-offset: 3px; }
+:focus:not(:focus-visible){ outline: none; }
+
+/* ---------- typography ---------- */
+.display{
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 400;
+  font-variation-settings: 'opsz' 144;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+}
+.mono-label{
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: var(--step--1);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.measure{ max-width: 68ch; }        /* 65–75ch body measure */
+.measure-tight{ max-width: 24ch; }  /* headline measure */
+
+/* ---------- hairlines ---------- */
+.hairline{ border-top: 1px solid var(--hair); }
+
+/* ---------- film grain overlay (SVG turbulence, data URI) ---------- */
+.grain{
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- nav ---------- */
+.nav{
+  transition: background-color 0.5s var(--ease-out), border-color 0.5s var(--ease-out);
+  border-bottom: 1px solid transparent;
+}
+.nav.scrolled{
+  background: rgba(10,10,11,0.82);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom-color: var(--hair);
+}
+.nav-link{
+  color: var(--muted);
+  transition: color 0.35s var(--ease-out);
+}
+.nav-link:hover{ color: var(--paper); }
+
+/* ---------- buttons ---------- */
+.btn{
+  display: inline-flex; align-items: center; gap: 0.75rem;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: var(--step--1);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 1rem 1.75rem;
+  border: 1px solid var(--hair-2);
+  transition: border-color 0.4s var(--ease-out),
+              background-color 0.4s var(--ease-out),
+              color 0.4s var(--ease-out),
+              transform 0.3s var(--ease-out);
+  will-change: transform;
+}
+.btn-primary{
+  background: var(--signal);
+  border-color: var(--signal);
+  color: var(--ink);
+  font-weight: 500;
+}
+.btn-primary:hover{ background: #5fe694; border-color: #5fe694; }
+.btn-ghost{ color: var(--paper); }
+.btn-ghost:hover{ border-color: var(--signal-dim); color: var(--signal); }
+.btn .tick{ transition: transform 0.35s var(--ease-out); }
+.btn:hover .tick{ transform: translateX(4px); }
+
+/* ---------- dark-glass card ---------- */
+.card{
+  background: linear-gradient(160deg, rgba(22,22,26,0.9), rgba(16,16,19,0.9));
+  border: 1px solid var(--hair);
+  transition: transform 0.55s var(--ease-out),
+              border-color 0.55s var(--ease-out),
+              box-shadow 0.55s var(--ease-out);
+}
+.card:hover{
+  transform: translateY(-5px);
+  border-color: rgba(74,222,128,0.28);
+  box-shadow: 0 24px 60px -30px rgba(0,0,0,0.9),
+              0 0 0 1px rgba(74,222,128,0.06);
+}
+
+/* ---------- failure-mode / index ledger rows ---------- */
+.ledger-row{
+  border-top: 1px solid var(--hair);
+  transition: background-color 0.4s var(--ease-out);
+}
+.ledger-row:last-child{ border-bottom: 1px solid var(--hair); }
+.ledger-row:hover{ background: rgba(237,237,232,0.025); }
+
+/* ---------- scroll reveals ----------
+   Hidden state only applies when JS is present (html:not(.no-js)).
+   Reduced-motion users get everything instantly (see media query). */
+html:not(.no-js) .reveal{
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity var(--dur) var(--ease-out),
+              transform var(--dur) var(--ease-out);
+  transition-delay: var(--d, 0s);
+}
+html:not(.no-js) .reveal.in{
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- hero layers ---------- */
+.hero-field{
+  position: absolute; inset: -12% 0 0 0;
+  background:
+    radial-gradient(120% 90% at 78% 8%, rgba(74,222,128,0.06), transparent 55%),
+    radial-gradient(90% 70% at 12% 100%, rgba(22,22,26,0.9), transparent 60%),
+    var(--ink);
+}
+/* rack-aisle suggestion: vertical hairlines under cold light — pure CSS */
+.hero-racks{
+  position: absolute; inset: -12% 0 0 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0px, transparent 118px,
+    rgba(237,237,232,0.035) 118px, rgba(237,237,232,0.035) 119px
+  );
+  mask-image: linear-gradient(to bottom, transparent 4%, black 40%, transparent 92%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 4%, black 40%, transparent 92%);
+}
+.hero-parallax{ will-change: transform; }
+
+/* scroll cue */
+@keyframes cue { 0%,100%{ transform: translateY(0); opacity:.5 } 50%{ transform: translateY(6px); opacity:1 } }
+.scroll-cue{ animation: cue 2.6s var(--ease-out) infinite; }
+
+/* ---------- form ---------- */
+.field{
+  width: 100%;
+  background: transparent;
+  border: 0; border-bottom: 1px solid var(--hair-2);
+  padding: 0.9rem 0;
+  color: var(--paper);
+  font-size: var(--step-0);
+  border-radius: 0;
+  transition: border-color 0.4s var(--ease-out);
+}
+.field::placeholder{ color: var(--faint); }
+.field:focus{ border-bottom-color: var(--signal); outline: none; }
+
+/* ---------- accent details ---------- */
+.sig-dot{
+  display:inline-block; width:6px; height:6px;
+  background: var(--signal); border-radius:9999px;
+  box-shadow: 0 0 10px rgba(74,222,128,0.7);
+}
+a.text-link{
+  color: var(--paper);
+  border-bottom: 1px solid var(--hair-2);
+  transition: color .35s var(--ease-out), border-color .35s var(--ease-out);
+}
+a.text-link:hover{ color: var(--signal); border-color: var(--signal-dim); }
+
+/* ==============================================================
+   REDUCED MOTION — kill everything non-essential.
+   ============================================================== */
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+  html:not(.no-js) .reveal{ opacity:1; transform:none; transition:none; }
+  .scroll-cue{ animation: none; }
+  .hero-parallax{ transform: none !important; }
+  .btn, .card, .btn .tick, .nav, .nav-link{ transition: none; }
+  .card:hover{ transform: none; }
+}
+</style>
+</head>
+
+<body class="antialiased">
+
+<!-- Film grain, sitewide, non-interactive -->
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ============================================================
+     NAV — fixed, minimal
+     ============================================================ -->
+<header id="nav" class="nav fixed top-0 left-0 right-0 z-50">
+  <div class="max-w-6xl mx-auto px-6 lg:px-8 flex items-center justify-between h-16 md:h-[4.5rem]">
+    <a href="#top" class="font-mono text-[0.8rem] tracking-[0.22em] text-paper hover:text-signal transition-colors duration-300">
+      JOEY&nbsp;VICTORINO
+    </a>
+
+    <nav class="hidden md:flex items-center gap-8" aria-label="Primary">
+      <a href="#services" class="nav-link font-mono text-[0.72rem] tracking-[0.16em] uppercase">Services</a>
+      <a href="#research" class="nav-link font-mono text-[0.72rem] tracking-[0.16em] uppercase">Research</a>
+      <a href="#about"    class="nav-link font-mono text-[0.72rem] tracking-[0.16em] uppercase">About</a>
+      <a href="#contact"  class="nav-link font-mono text-[0.72rem] tracking-[0.16em] uppercase">Contact</a>
+      <a href="#contact" class="btn btn-primary !py-2.5 !px-5 magnetic">Book a Readiness Call</a>
+    </nav>
+
+    <!-- Mobile menu toggle -->
+    <button id="menu-btn" class="md:hidden p-2 -mr-2" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+      <span class="block w-6 h-px bg-paper mb-1.5 transition-transform duration-300"></span>
+      <span class="block w-6 h-px bg-paper transition-transform duration-300"></span>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-[rgba(237,237,232,0.1)] bg-ink/95 backdrop-blur-md">
+    <nav class="px-6 py-8 flex flex-col gap-6" aria-label="Mobile">
+      <a href="#services" class="nav-link font-mono text-sm tracking-[0.16em] uppercase">Services</a>
+      <a href="#research" class="nav-link font-mono text-sm tracking-[0.16em] uppercase">Research</a>
+      <a href="#about"    class="nav-link font-mono text-sm tracking-[0.16em] uppercase">About</a>
+      <a href="#contact"  class="nav-link font-mono text-sm tracking-[0.16em] uppercase">Contact</a>
+      <a href="#contact"  class="btn btn-primary self-start mt-2">Book a Readiness Call</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============================================================
+     HERO — full viewport, two parallax layers, quiet scroll cue
+     ============================================================ -->
+<section class="relative min-h-screen flex items-end overflow-hidden">
+  <!-- layer 1: light field (drifts slightly faster) -->
+  <div class="hero-field hero-parallax" data-parallax="0.12" aria-hidden="true"></div>
+  <!-- layer 2: rack hairlines (slower — reads as depth) -->
+  <div class="hero-racks hero-parallax" data-parallax="0.05" aria-hidden="true"></div>
+
+  <div class="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 w-full pb-24 pt-40 md:pb-28">
+    <p class="mono-label reveal mb-8 flex items-center gap-3">
+      <span class="sig-dot" aria-hidden="true"></span>
+      Operator&nbsp;//&nbsp;JV&nbsp;&mdash;&nbsp;Private&nbsp;AI&nbsp;Deployment&nbsp;Security
+    </p>
+
+    <h1 class="display reveal measure-tight" style="--d:.08s; font-size:var(--step-4);">
+      Private AI deployment security for teams that cannot afford to guess.
+    </h1>
+
+    <p class="reveal measure mt-8 text-[var(--muted)]" style="--d:.16s; font-size:var(--step-1); line-height:1.6;">
+      Advisory for CISOs, founders, and technical executives moving AI onto their
+      own infrastructure &mdash; where the vendor safety net disappears and the
+      threat model quietly changes.
+    </p>
+
+    <div class="reveal mt-12 flex flex-wrap items-center gap-4" style="--d:.24s;">
+      <a href="#contact" class="btn btn-primary magnetic">
+        Book a Readiness Call <span class="tick" aria-hidden="true">&rarr;</span>
+      </a>
+      <a href="#research" class="btn btn-ghost magnetic">
+        Start the free AI Security Foundations course
+      </a>
+    </div>
+  </div>
+
+  <!-- scroll cue -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 reveal" style="--d:.5s;" aria-hidden="true">
+    <div class="scroll-cue font-mono text-[0.65rem] tracking-[0.3em] text-[var(--faint)]">SCROLL</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     §01 — THE PROBLEM
+     ============================================================ -->
+<section class="hairline">
+  <div class="max-w-6xl mx-auto px-6 lg:px-8" style="padding-top:var(--sp-5); padding-bottom:var(--sp-5);">
+    <div class="grid md:grid-cols-12 gap-10">
+      <div class="md:col-span-3">
+        <p class="mono-label reveal">&sect;01&nbsp;&mdash;&nbsp;The&nbsp;Problem</p>
+      </div>
+      <div class="md:col-span-9">
+        <h2 class="display reveal" style="font-size:var(--step-3); max-width:20ch;">
+          Private AI is not automatically secure.
+        </h2>
+        <p class="reveal measure mt-8 text-[var(--muted)]" style="--d:.1s;">
+          Moving models inside your perimeter removes one class of risk and quietly
+          introduces five more. The stack is new. The tooling is immature. And most
+          deployments are configured by teams doing it for the first time, under
+          deadline, with no one checking the work.
+        </p>
+        <p class="reveal measure mt-5 text-[var(--muted)]" style="--d:.18s;">
+          These are the failure modes I find most often. None of them announce themselves.
+        </p>
+
+        <!-- failure-mode ledger: mono, staggered reveal -->
+        <ul class="mt-14 font-mono list-none">
+
+          <li class="ledger-row reveal grid grid-cols-12 gap-4 py-6" style="--d:.05s;">
+            <span class="col-span-2 sm:col-span-1 text-[var(--faint)] text-[0.8rem] pt-0.5">01</span>
+            <div class="col-span-10 sm:col-span-11">
+              <p class="text-[0.9rem] tracking-[0.08em] uppercase text-signal">Exposed endpoints</p>
+              <p class="mt-2 text-[0.95rem] leading-relaxed text-[var(--muted)] font-sans">Ollama, vLLM, and llama.cpp servers listening on 0.0.0.0 with no authentication. Findable in minutes. Regularly found.</p>
+            </div>
+          </li>
+
+          <li class="ledger-row reveal grid grid-cols-12 gap-4 py-6" style="--d:.12s;">
+            <span class="col-span-2 sm:col-span-1 text-[var(--faint)] text-[0.8rem] pt-0.5">02</span>
+            <div class="col-span-10 sm:col-span-11">
+              <p class="text-[0.9rem] tracking-[0.08em] uppercase text-signal">Leaked retrieval corpora</p>
+              <p class="mt-2 text-[0.95rem] leading-relaxed text-[var(--muted)] font-sans">RAG pipelines that index your most sensitive documents &mdash; then serve them to anyone who asks well.</p>
+            </div>
+          </li>
+
+          <li class="ledger-row reveal grid grid-cols-12 gap-4 py-6" style="--d:.19s;">
+            <span class="col-span-2 sm:col-span-1 text-[var(--faint)] text-[0.8rem] pt-0.5">03</span>
+            <div class="col-span-10 sm:col-span-11">
+              <p class="text-[0.9rem] tracking-[0.08em] uppercase text-signal">Mishandled model artifacts</p>
+              <p class="mt-2 text-[0.95rem] leading-relaxed text-[var(--muted)] font-sans">Unsigned weights from public hubs. Unverified checkpoints. Serialization formats that execute code on load.</p>
+            </div>
+          </li>
+
+          <li class="ledger-row reveal grid grid-cols-12 gap-4 py-6" style="--d:.26s;">
+            <span class="col-span-2 sm:col-span-1 text-[var(--faint)] text-[0.8rem] pt-0.5">04</span>
+            <div class="col-span-10 sm:col-span-11">
+              <p class="text-[0.9rem] tracking-[0.08em] uppercase text-signal">Wrong hardware</p>
+              <p class="mt-2 text-[0.95rem] leading-relaxed text-[var(--muted)] font-sans">Six figures of GPU purchased against a workload nobody profiled. The invoice arrives before the truth does.</p>
+            </div>
+          </li>
+
+          <li class="ledger-row reveal grid grid-cols-12 gap-4 py-6" style="--d:.33s;">
+            <span class="col-span-2 sm:col-span-1 text-[var(--faint)] text-[0.8rem] pt-0.5">05</span>
+            <div class="col-span-10 sm:col-span-11">
+              <p class="text-[0.9rem] tracking-[0.08em] uppercase text-signal">Evidence gaps</p>
+              <p class="mt-2 text-[0.95rem] leading-relaxed text-[var(--muted)] font-sans">No logs, no lineage, no answer &mdash; when the auditor arrives, or the incident does.</p>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     §02 — WHO I HELP
+     ============================================================ -->
+<section class="hairline">
+  <div class="max-w-6xl mx-auto px-6 lg:px-8" style="padding-top:var(--sp-5); padding-bottom:var(--sp-5);">
+    <div class="grid md:grid-cols-12 gap-10">
+      <div class="md:col-span-3">
+        <p class="mono-label reveal">&sect;02&nbsp;&mdash;&nbsp;Who&nbsp;I&nbsp;Help</p>
+      </div>
+      <div class="md:col-span-9">
+        <div class="grid sm:grid-cols-2 gap-x-12 gap-y-12">
+          <div class="reveal">
+            <p class="font-mono text-[0.72rem] tracking-[0.16em] uppercase text-[var(--faint)]">Executives</p>
+            <p class="mt-3 text-[var(--muted)] measure">Who signed off on private AI and now own the risk.</p>
+          </div>
+          <div class="reveal" style="--d:.08s;">
+            <p class="font-mono text-[0.72rem] tracking-[0.16em] uppercase text-[var(--faint)]">Security leaders</p>
+            <p class="mt-3 text-[var(--muted)] measure">Handed an AI stack their existing controls were never designed to see.</p>
+          </div>
+          <div class="reveal" style="--d:.16s;">
+            <p class="font-mono text-[0.72rem] tracking-[0.16em] uppercase text-[var(--faint)]">Founders</p>
+            <p class="mt-3 text-[var(--muted)] measure">Whose enterprise deals now hinge on proving the deployment is safe.</p>
+          </div>
+          <div class="reveal" style="--d:.24s;">
+            <p class="font-mono text-[0.72rem] tracking-[0.16em] uppercase text-[var(--faint)]">Technical teams</p>
+            <p class="mt-3 text-[var(--muted)] measure">Strong engineers, first AI deployment. They need a second set of eyes, not a lecture.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     §03 — OFFERS
+     ============================================================ -->
+<section id="services" class="hairline scroll-mt-20">
+  <div class="max-w-6xl mx-auto px-6 lg:px-8" style="padding-top:var(--sp-5); padding-bottom:var(--sp-5);">
+    <p class="mono-label reveal">&sect;03&nbsp;&mdash;&nbsp;Services</p>
+    <h2 class="display reveal mt-6" style="--d:.08s; font-size:var(--step-3); max-width:22ch;">
+      Fixed scope. Fixed price. Evidence you can hand to the board.
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-5 mt-16">
+
+      <!-- Offer 1 -->
+      <article class="card reveal p-8 md:p-10 flex flex-col">
+        <div class="flex items-baseline justify-between gap-4">
+          <p class="font-mono text-[0.7rem] tracking-[0.16em] uppercase text-[var(--faint)]">01 / Advisory</p>
+          <p class="font-mono text-[0.8rem] text-signal whitespace-nowrap">$750&ndash;$3,500</p>
+        </div>
+        <h3 class="display mt-6" style="font-size:var(--step-2);">Private AI Deal Desk</h3>
+        <p class="mt-4 text-[var(--muted)]">A second set of eyes before you sign. I review the vendor claims, the hardware quote, and the architecture &mdash; and tell you what I would do.</p>
+        <ul class="mt-6 space-y-2 font-mono text-[0.78rem] text-[var(--muted)] flex-1">
+          <li class="flex gap-3"><span class="text-signal" aria-hidden="true">&mdash;</span> Vendor &amp; quote review, line by line</li>
+          <li class="flex gap-3"><span class="text-signal" aria-hidden="true">&mdash;</span> Written recommendation within 48 hours</li>
+          <li class="flex gap-3"><span class="text-signal" aria-hidden="true">&mdash;</span> One live session to walk it through</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost magnetic mt-8 self-start">Engage the Deal Desk <span class="tick" aria-hidden="true">&rarr;</span></a>
+      </article>
+
+      <!-- Offer 2 -->
+      <article class="card reveal p-8 md:p-10 flex flex-col" style="--d:.08s;">
+        <div class="flex items-baseline justify-between gap-4">
+          <p class="font-mono text-[0.7rem] tracking-[0.16em] uppercase text-[var(--faint)]">02 / Sprint</p>
+          <p class="font-mono text-[0.8rem] text-signal whitespace-nowrap">$8,500&ndash;$18,500</p>
+        </div>
+        <h3 class="display mt-6" style="font-size:var(--step-2);">Deployment Readiness Sprint</h3>
+        <p class="mt-4 text-[var(--muted)]">From pilot to production without the guesswork. Two to three weeks, ending in a clear go / no-go and a hardening plan your team can execute.</p>
+        <ul class="mt-6 space-y-2 font-mono text-[0.78rem] text-[var(--muted)] flex-1">
+          <li class="flex gap-3"><span class="text-signal" aria-hidden="true">&mdash;</span> Threat model for your specific stack</li>
+          <li class="flex gap-3"><span class="text-signal" aria-hidden="true">&mdash;</span> Prioritized hardening plan, owner-assigned</li>
+          <li class="flex gap-3"><span class="text-signal" aria-hidden="true">&mdash;</span> Go / no-go brief, written for the board</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost magnetic mt-8 self-start">Scope a Sprint <span class="tick" aria-hidden="true">&rarr;</span></a>
+      </article>
+
+      <!-- Offer 3 -->
+      <article class="card reveal p-8 md:p-10 flex flex-col" style="--d:.16s;">
+        <div class="flex items-baseline justify-between gap-4">
+          <p class="font-mono text-[0.7rem] tracking-[0.16em] uppercase text-[var(--faint)]">03 / Assessment</p>
+          <p class="font-mono text-[0.8rem] text-signal whitespace-nowrap">$12,500&ndash;$30,000</p>
+        </div>
+        <h3 class="display mt-6" style="font-size:var(--step-2);">AI Asset Exposure Review</h3>
+        <p class="mt-4 text-[var(--muted)]">Find what your deployment already exposes &mdash; before someone else does. Endpoints, retrieval corpora, and model artifacts, examined with evidence attached.</p>
+        <ul class="mt-6 space-y-2 font-mono text-[0.78rem] text-[var(--muted)] flex-1">
+          <li class="flex gap-3"><span class="text-signal" aria-hidden="true">&mdash;</span> Endpoint &amp; surface enumeration</li>
+          <li class="flex gap-3"><span class="text-signal" aria-hidden="true">&mdash;</span> Corpus &amp; artifact exposure analysis</li>
+          <li class="flex gap-3"><span class="text-signal" aria-hidden="true">&mdash;</span> Findings report with supporting evidence</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost magnetic mt-8 self-start">Request a Review <span class="tick" aria-hidden="true">&rarr;</span></a>
+      </article>
+
+      <!-- Offer 4 -->
+      <article class="card reveal p-8 md:p-10 flex flex-col" style="--d:.24s;">
+        <div class="flex items-baseline justify-between gap-4">
+          <p class="font-mono text-[0.7rem] tracking-[0.16em] uppercase text-[var(--faint)]">04 / Retainer</p>
+          <p class="font-mono text-[0.8rem] text-signal whitespace-nowrap">$5,000&ndash;$15,000/mo</p>
+        </div>
+        <h3 class="display mt-6" style="font-size:var(--step-2);">Fractional AI Security Officer</h3>
+        <p class="mt-4 text-[var(--muted)]">Standing security leadership for your AI program &mdash; without the executive hire. I own the roadmap, the reviews, and the answer when the board asks.</p>
+        <ul class="mt-6 space-y-2 font-mono text-[0.78rem] text-[var(--muted)] flex-1">
+          <li class="flex gap-3"><span class="text-signal" aria-hidden="true">&mdash;</span> Monthly cadence: reviews, roadmap, sign-off</li>
+          <li class="flex gap-3"><span class="text-signal" aria-hidden="true">&mdash;</span> Direct line for deployment decisions</li>
+          <li class="flex gap-3"><span class="text-signal" aria-hidden="true">&mdash;</span> Board-ready reporting, quarterly</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost magnetic mt-8 self-start">Discuss a Retainer <span class="tick" aria-hidden="true">&rarr;</span></a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     §04 — WHY ME
+     ============================================================ -->
+<section id="about" class="hairline scroll-mt-20">
+  <div class="max-w-6xl mx-auto px-6 lg:px-8" style="padding-top:var(--sp-5); padding-bottom:var(--sp-5);">
+    <div class="grid md:grid-cols-12 gap-10">
+      <div class="md:col-span-3">
+        <p class="mono-label reveal">&sect;04&nbsp;&mdash;&nbsp;Why&nbsp;Me</p>
+      </div>
+      <div class="md:col-span-9">
+        <h2 class="display reveal" style="font-size:var(--step-3); max-width:20ch;">
+          I build this stack. I don't just audit it.
+        </h2>
+        <p class="reveal measure mt-8 text-[var(--muted)]" style="--d:.1s;">
+          I'm the founder of <a href="https://qompute.ai" class="text-link">Qompute AI</a>,
+          where we deploy and secure private AI infrastructure for real workloads &mdash;
+          not slideware. The tools I ship and the research I publish come from the same
+          deployments I advise on. When I tell you a configuration will fail, it's because
+          I've watched it fail.
+        </p>
+        <p class="reveal measure mt-5 text-[var(--muted)]" style="--d:.18s;">
+          You get an operator's answer: specific, testable, and signed.
+        </p>
+
+        <!-- credibility slots — populate as they land -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-[rgba(237,237,232,0.08)] border border-[rgba(237,237,232,0.08)] mt-14 reveal" style="--d:.24s;">
+          <div class="bg-ink p-6">
+            <p class="display text-signal" style="font-size:var(--step-2);">Founder</p>
+            <p class="font-mono text-[0.68rem] tracking-[0.14em] uppercase text-[var(--faint)] mt-2">Qompute&nbsp;AI</p>
+          </div>
+          <div class="bg-ink p-6">
+            <p class="display text-signal" style="font-size:var(--step-2);">Tools</p>
+            <p class="font-mono text-[0.68rem] tracking-[0.14em] uppercase text-[var(--faint)] mt-2">Shipped&nbsp;open-source</p>
+          </div>
+          <div class="bg-ink p-6">
+            <p class="display text-signal" style="font-size:var(--step-2);">Research</p>
+            <p class="font-mono text-[0.68rem] tracking-[0.14em] uppercase text-[var(--faint)] mt-2">Published&nbsp;findings</p>
+          </div>
+          <div class="bg-ink p-6">
+            <p class="display text-signal" style="font-size:var(--step-2);">Hands-on</p>
+            <p class="font-mono text-[0.68rem] tracking-[0.14em] uppercase text-[var(--faint)] mt-2">Deployments&nbsp;reviewed</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     §05 — TOOLS & RESEARCH
+     ============================================================ -->
+<section id="research" class="hairline scroll-mt-20">
+  <div class="max-w-6xl mx-auto px-6 lg:px-8" style="padding-top:var(--sp-5); padding-bottom:var(--sp-5);">
+    <div class="grid md:grid-cols-12 gap-10">
+      <div class="md:col-span-3">
+        <p class="mono-label reveal">&sect;05&nbsp;&mdash;&nbsp;Tools&nbsp;&amp;&nbsp;Research</p>
+      </div>
+      <div class="md:col-span-9">
+        <h2 class="display reveal" style="font-size:var(--step-3); max-width:22ch;">
+          The work is public. Check it before you hire me.
+        </h2>
+
+        <div class="mt-14 font-mono">
+          <!-- TODO: replace # hrefs with live URLs as each ships -->
+          <a href="/checklist.html" class="ledger-row reveal grid grid-cols-12 gap-4 py-7 group">
+            <span class="col-span-2 sm:col-span-1 text-[var(--faint)] text-[0.8rem] pt-0.5">A</span>
+            <div class="col-span-9 sm:col-span-10">
+              <p class="text-[0.9rem] tracking-[0.08em] uppercase text-paper group-hover:text-signal transition-colors duration-300">The Hardening Checklist &mdash; free, no email</p>
+              <p class="mt-2 text-[0.95rem] leading-relaxed text-[var(--muted)] font-sans">40 checks across 6 domains for Ollama, vLLM, llama.cpp, and RAG stacks. Printable. Share it.</p>
+            </div>
+            <span class="col-span-1 text-right text-[var(--faint)] group-hover:text-signal transition-colors duration-300" aria-hidden="true">&nearr;</span>
+          </a>
+
+          <a href="#" class="ledger-row reveal grid grid-cols-12 gap-4 py-7 group" style="--d:.05s;">
+            <span class="col-span-2 sm:col-span-1 text-[var(--faint)] text-[0.8rem] pt-0.5">B</span>
+            <div class="col-span-9 sm:col-span-10">
+              <p class="text-[0.9rem] tracking-[0.08em] uppercase text-paper group-hover:text-signal transition-colors duration-300">Open-source exposure scanner</p>
+              <p class="mt-2 text-[0.95rem] leading-relaxed text-[var(--muted)] font-sans">Point it at your own perimeter. Find the inference endpoints you forgot about.</p>
+            </div>
+            <span class="col-span-1 text-right text-[var(--faint)] group-hover:text-signal transition-colors duration-300" aria-hidden="true">&nearr;</span>
+          </a>
+
+          <a href="#" class="ledger-row reveal grid grid-cols-12 gap-4 py-7 group" style="--d:.12s;">
+            <span class="col-span-2 sm:col-span-1 text-[var(--faint)] text-[0.8rem] pt-0.5">C</span>
+            <div class="col-span-9 sm:col-span-10">
+              <p class="text-[0.9rem] tracking-[0.08em] uppercase text-paper group-hover:text-signal transition-colors duration-300">iOS app</p>
+              <p class="mt-2 text-[0.95rem] leading-relaxed text-[var(--muted)] font-sans">Private AI in your pocket, built with the same discipline this site preaches.</p>
+            </div>
+            <span class="col-span-1 text-right text-[var(--faint)] group-hover:text-signal transition-colors duration-300" aria-hidden="true">&nearr;</span>
+          </a>
+
+          <a href="#" class="ledger-row reveal grid grid-cols-12 gap-4 py-7 group" style="--d:.19s;">
+            <span class="col-span-2 sm:col-span-1 text-[var(--faint)] text-[0.8rem] pt-0.5">D</span>
+            <div class="col-span-9 sm:col-span-10">
+              <p class="text-[0.9rem] tracking-[0.08em] uppercase text-paper group-hover:text-signal transition-colors duration-300">The Private AI Exposure Index</p>
+              <p class="mt-2 text-[0.95rem] leading-relaxed text-[var(--muted)] font-sans">Ongoing research measuring how exposed real-world private AI deployments are.</p>
+            </div>
+            <span class="col-span-1 text-right text-[var(--faint)] group-hover:text-signal transition-colors duration-300" aria-hidden="true">&nearr;</span>
+          </a>
+
+          <a href="#" class="ledger-row reveal grid grid-cols-12 gap-4 py-7 group" style="--d:.26s;">
+            <span class="col-span-2 sm:col-span-1 text-[var(--faint)] text-[0.8rem] pt-0.5">E</span>
+            <div class="col-span-9 sm:col-span-10">
+              <p class="text-[0.9rem] tracking-[0.08em] uppercase text-paper group-hover:text-signal transition-colors duration-300">AI Security Foundations &mdash; free course</p>
+              <p class="mt-2 text-[0.95rem] leading-relaxed text-[var(--muted)] font-sans">Start here. The baseline every team should clear before a single weight is loaded.</p>
+            </div>
+            <span class="col-span-1 text-right text-[var(--faint)] group-hover:text-signal transition-colors duration-300" aria-hidden="true">&nearr;</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     §06 — FINAL CTA / CONTACT
+     ============================================================ -->
+<section id="contact" class="hairline scroll-mt-20 relative overflow-hidden">
+  <!-- faint signal wash behind the closing ask -->
+  <div class="absolute inset-0 pointer-events-none" aria-hidden="true"
+       style="background: radial-gradient(70% 60% at 50% 110%, rgba(74,222,128,0.05), transparent 60%);"></div>
+
+  <div class="relative max-w-6xl mx-auto px-6 lg:px-8" style="padding-top:var(--sp-5); padding-bottom:var(--sp-5);">
+    <p class="mono-label reveal">&sect;06&nbsp;&mdash;&nbsp;Contact</p>
+
+    <div class="grid md:grid-cols-2 gap-16 mt-6">
+      <div>
+        <h2 class="display reveal" style="--d:.06s; font-size:var(--step-3); max-width:16ch;">
+          Book a Readiness Call.
+        </h2>
+        <p class="reveal measure mt-8 text-[var(--muted)]" style="--d:.14s;">
+          Thirty minutes. Bring your architecture, your quote, or your doubt.
+          You'll leave with a straight answer about where you stand &mdash;
+          whether or not we work together.
+        </p>
+
+        <!-- ==================================================
+             INTEGRATION PLACEHOLDERS — replace before launch:
+             1. Cal.com : swap href below for your event link,
+                          e.g. https://cal.com/joeyvictorino/readiness
+             2. Stripe  : swap href for your Payment Link,
+                          e.g. https://buy.stripe.com/XXXX (Deal Desk prepay)
+             ================================================== -->
+        <div class="reveal mt-10 flex flex-wrap gap-4" style="--d:.22s;">
+          <a href="#" data-placeholder="CAL_COM_LINK" class="btn btn-primary magnetic">
+            Open the calendar <span class="tick" aria-hidden="true">&rarr;</span>
+          </a>
+          <a href="#" data-placeholder="STRIPE_PAYMENT_LINK" class="btn btn-ghost magnetic">
+            Prepay the Deal Desk
+          </a>
+        </div>
+
+        <p class="reveal font-mono text-[0.7rem] tracking-[0.14em] text-[var(--faint)] mt-10" style="--d:.3s;">
+          PGP available on request &middot; NDAs welcome
+        </p>
+      </div>
+
+      <!-- inquiry form -->
+      <!-- TODO: point action at your form handler (Formspree / Cloudflare Worker / etc.) -->
+      <form class="reveal flex flex-col gap-8 md:pt-4" style="--d:.18s;" action="#" method="post">
+        <div>
+          <label for="f-name" class="font-mono text-[0.7rem] tracking-[0.16em] uppercase text-[var(--faint)]">Name</label>
+          <input id="f-name" name="name" type="text" required autocomplete="name" class="field mt-1" placeholder="Your name">
+        </div>
+        <div>
+          <label for="f-company" class="font-mono text-[0.7rem] tracking-[0.16em] uppercase text-[var(--faint)]">Company</label>
+          <input id="f-company" name="company" type="text" autocomplete="organization" class="field mt-1" placeholder="Company or fund">
+        </div>
+        <div>
+          <label for="f-context" class="font-mono text-[0.7rem] tracking-[0.16em] uppercase text-[var(--faint)]">Context</label>
+          <input id="f-context" name="context" type="text" class="field mt-1" placeholder="One line on what you're deploying">
+        </div>
+        <button type="submit" class="btn btn-ghost magnetic self-start mt-2">
+          Send inquiry <span class="tick" aria-hidden="true">&rarr;</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="hairline">
+  <div class="max-w-6xl mx-auto px-6 lg:px-8 py-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+    <p class="font-mono text-[0.68rem] tracking-[0.18em] text-[var(--faint)]">
+      &copy; <span id="year">2026</span> JOEY VICTORINO &middot; PRIVATE AI DEPLOYMENT SECURITY
+    </p>
+    <p class="font-mono text-[0.68rem] tracking-[0.18em] text-[var(--faint)]">
+      OPERATOR&nbsp;//&nbsp;JV &middot; BUILT&nbsp;BY&nbsp;HAND
+    </p>
+  </div>
+</footer>
+
+<script>
+/* ==============================================================
+   MOTION — native, disciplined. Everything here is optional:
+   the page is fully readable with this block deleted.
+   ============================================================== */
+(function () {
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- scroll reveals (Intersection Observer) ---------- */
+  var reveals = document.querySelectorAll('.reveal');
+  if (!reduced && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(function (el) { io.observe(el); });
+  } else {
+    reveals.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* ---------- nav scroll state ---------- */
+  var nav = document.getElementById('nav');
+  var onScrollNav = function () {
+    nav.classList.toggle('scrolled', window.scrollY > 24);
+  };
+  onScrollNav();
+  window.addEventListener('scroll', onScrollNav, { passive: true });
+
+  /* ---------- hero parallax (2 layers, rAF-throttled) ---------- */
+  if (!reduced) {
+    var layers = document.querySelectorAll('[data-parallax]');
+    var ticking = false;
+    var onScrollParallax = function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        var y = window.scrollY;
+        layers.forEach(function (el) {
+          var f = parseFloat(el.getAttribute('data-parallax'));
+          el.style.transform = 'translate3d(0,' + (y * f) + 'px,0)';
+        });
+        ticking = false;
+      });
+    };
+    window.addEventListener('scroll', onScrollParallax, { passive: true });
+  }
+
+  /* ---------- magnetic CTAs (pointer devices only, capped 4px) ---------- */
+  if (!reduced && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    document.querySelectorAll('.magnetic').forEach(function (el) {
+      el.addEventListener('mousemove', function (e) {
+        var r = el.getBoundingClientRect();
+        var x = (e.clientX - r.left - r.width / 2) / (r.width / 2);
+        var y = (e.clientY - r.top - r.height / 2) / (r.height / 2);
+        el.style.transform = 'translate(' + (x * 4) + 'px,' + (y * 4) + 'px)';
+      });
+      el.addEventListener('mouseleave', function () {
+        el.style.transform = '';
+      });
+    });
+  }
+
+  /* ---------- mobile menu ---------- */
+  var btn = document.getElementById('menu-btn');
+  var menu = document.getElementById('mobile-menu');
+  if (btn && menu) {
+    var setOpen = function (open) {
+      menu.classList.toggle('hidden', !open);
+      btn.setAttribute('aria-expanded', String(open));
+      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      var bars = btn.querySelectorAll('span');
+      bars[0].style.transform = open ? 'translateY(3.5px) rotate(45deg)' : '';
+      bars[1].style.transform = open ? 'translateY(-3.5px) rotate(-45deg)' : '';
+    };
+    btn.addEventListener('click', function () {
+      setOpen(menu.classList.contains('hidden'));
+    });
+    /* close on link tap + Escape */
+    menu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () { setOpen(false); });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') setOpen(false);
+    });
+  }
+
+  /* ---------- footer year ---------- */
+  var y = document.getElementById('year');
+  if (y) y.textContent = new Date().getFullYear();
+})();
+</script>
+
+<!-- ==============================================================
+     ASSET GENERATION PROMPTS — Midjourney / Kling
+     Ready to copy. Register: restrained operator luxury.
+     No product glamour, no neon cyberpunk, no explosions.
+     ==============================================================
+
+1. HERO TEXTURE — servers dissolving into data
+   "Abstract dark hero background, server rack aisle dissolving into fine
+   drifting particles of pale green data, cold directional light from the
+   left, deep near-black #0A0A0B, single restrained accent #4ADE80 at 10%
+   presence, heavy negative space in upper third, matte finish, subtle film
+   grain, cinematic large-format photography, no text, no people --ar 16:9
+   --style raw"
+
+2. RACK AISLE — cold light
+   "Empty data center aisle at night, one cold shaft of light across dark
+   brushed-metal racks, faint green status LEDs out of focus, near-black
+   palette, mist-thin haze, quiet and severe, defense-facility mood,
+   large-format film photography, deep shadows retain detail, no text
+   --ar 21:9 --style raw"
+
+3. GRAIN OVERLAY
+   "Seamless tileable 35mm film grain texture, monochrome, fine uniform
+   noise, no scratches, no dust hairs, no vignette, neutral mid-gray,
+   subtle organic variance, intended as a 4-6% opacity screen overlay
+   --ar 1:1 --tile"
+
+4. DARK-GLASS LOOP (Kling / video)
+   "Slow seamless loop: light moving across dark iridescent glass, oil-slick
+   sheen kept nearly monochrome with one faint green flare, extremely slow
+   drift, no cuts, matte black background, luxurious and restrained,
+   10 seconds, loopable, no text"
+
+5. OPERATOR DESK — atmosphere
+   "Operator's desk at night, single monitor glowing off-white on a dark
+   walnut surface, closed field notebook, mechanical keyboard, one small
+   green indicator light, everything else falls to near-black shadow,
+   cinematic stillness, 35mm film grain, no faces, no clutter, no brand
+   logos --ar 3:2 --style raw"
+
+6. FOUNDER PORTRAIT TREATMENT
+   "Monochrome executive portrait, man seated in deep shadow, single hard
+   rim light tracing profile, charcoal background #16161A, expression calm
+   and direct, medium-format film, visible fine grain, no retouching gloss,
+   in the register of an intelligence-brief author photo, not a LinkedIn
+   headshot --ar 4:5 --style raw"
+
+7. SECTION DIVIDER — etched metal
+   "Extreme close-up of etched dark anodized aluminum, hairline circuit-like
+   engravings catching a thin edge of cold light, one engraved line glowing
+   faint signal green, macro photography, shallow depth of field, austere
+   and precise, near-black field, no text --ar 16:5 --style raw"
+
+8. RETRIEVAL CORPUS — abstract
+   "Dark archive of glass microfiche sheets receding into blackness, faint
+   documents suspended in each pane, one pane lit from within pale green,
+   fog-dark atmosphere, metaphor for indexed knowledge at risk, restrained
+   and museum-quiet, cinematic still, no text, no people --ar 16:9
+   --style raw"
+
+============================================================== -->
+
+</body>
+</html>

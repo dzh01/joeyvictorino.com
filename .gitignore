@@ -1,0 +1,5 @@
+# private working files — never publish
+launch/
+claude-code-goal.md
+index.previous.html
+.DS_Store
