@@ -13,7 +13,7 @@
      ============================================================ -->
 
 <title>Joey Victorino — Private AI Deployment Security</title>
-<meta name="description" content="Advisory for CISOs, founders, and technical executives deploying AI on their own infrastructure. Private AI is not automatically secure. Joey Victorino, founder of Qompute AI.">
+<meta name="description" content="Advisory for CISOs, founders, and technical executives deploying AI on their own infrastructure. Private AI is not automatically secure. Joey Victorino, co-founder of Qompute AI.">
 <meta name="author" content="Joey Victorino">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://joeyvictorino.com/">
@@ -384,8 +384,8 @@ a.text-link:hover{ color: var(--signal); border-color: var(--signal-dim); }
       <a href="#contact" class="btn btn-primary magnetic">
         Book a Readiness Call <span class="tick" aria-hidden="true">&rarr;</span>
       </a>
-      <a href="#research" class="btn btn-ghost magnetic">
-        Start the free AI Security Foundations course
+      <a href="checklist.html" class="btn btn-ghost magnetic">
+        Read the free Hardening Checklist
       </a>
     </div>
   </div>
@@ -595,7 +595,7 @@ a.text-link:hover{ color: var(--signal); border-color: var(--signal-dim); }
           I build this stack. I don't just audit it.
         </h2>
         <p class="reveal measure mt-8 text-[var(--muted)]" style="--d:.1s;">
-          I'm the founder of <a href="https://qompute.ai" class="text-link">Qompute AI</a>,
+          I'm a co-founder of <a href="https://qompute.ai" class="text-link">Qompute AI</a>,
           where we deploy and secure private AI infrastructure for real workloads &mdash;
           not slideware. The tools I ship and the research I publish come from the same
           deployments I advise on. When I tell you a configuration will fail, it's because
@@ -608,7 +608,7 @@ a.text-link:hover{ color: var(--signal); border-color: var(--signal-dim); }
         <!-- credibility slots — populate as they land -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-[rgba(237,237,232,0.08)] border border-[rgba(237,237,232,0.08)] mt-14 reveal" style="--d:.24s;">
           <div class="bg-ink p-6">
-            <p class="display text-signal" style="font-size:var(--step-2);">Founder</p>
+            <p class="display text-signal" style="font-size:var(--step-2);">Co-founder</p>
             <p class="font-mono text-[0.68rem] tracking-[0.14em] uppercase text-[var(--faint)] mt-2">Qompute&nbsp;AI</p>
           </div>
           <div class="bg-ink p-6">
@@ -644,7 +644,6 @@ a.text-link:hover{ color: var(--signal); border-color: var(--signal-dim); }
         </h2>
 
         <div class="mt-14 font-mono">
-          <!-- TODO: replace # hrefs with live URLs as each ships -->
           <a href="checklist.html" class="ledger-row reveal grid grid-cols-12 gap-4 py-7 group">
             <span class="col-span-2 sm:col-span-1 text-[var(--faint)] text-[0.8rem] pt-0.5">A</span>
             <div class="col-span-9 sm:col-span-10">
@@ -654,41 +653,43 @@ a.text-link:hover{ color: var(--signal); border-color: var(--signal-dim); }
             <span class="col-span-1 text-right text-[var(--faint)] group-hover:text-signal transition-colors duration-300" aria-hidden="true">&nearr;</span>
           </a>
 
-          <a href="#" class="ledger-row reveal grid grid-cols-12 gap-4 py-7 group" style="--d:.05s;">
+          <!-- Not yet shipped: honest status tags, no dead links.
+               When each ships: convert the div back to an <a href>, drop the tag. -->
+          <div class="ledger-row reveal grid grid-cols-12 gap-4 py-7" style="--d:.05s;">
             <span class="col-span-2 sm:col-span-1 text-[var(--faint)] text-[0.8rem] pt-0.5">B</span>
-            <div class="col-span-9 sm:col-span-10">
-              <p class="text-[0.9rem] tracking-[0.08em] uppercase text-paper group-hover:text-signal transition-colors duration-300">Open-source exposure scanner</p>
+            <div class="col-span-7 sm:col-span-8">
+              <p class="text-[0.9rem] tracking-[0.08em] uppercase text-[var(--muted)]">Open-source exposure scanner</p>
               <p class="mt-2 text-[0.95rem] leading-relaxed text-[var(--muted)] font-sans">Point it at your own perimeter. Find the inference endpoints you forgot about.</p>
             </div>
-            <span class="col-span-1 text-right text-[var(--faint)] group-hover:text-signal transition-colors duration-300" aria-hidden="true">&nearr;</span>
-          </a>
+            <span class="col-span-3 text-right text-[0.65rem] tracking-[0.14em] text-[var(--faint)] pt-1">SHIPPING&nbsp;JULY&nbsp;2026</span>
+          </div>
 
-          <a href="#" class="ledger-row reveal grid grid-cols-12 gap-4 py-7 group" style="--d:.12s;">
+          <div class="ledger-row reveal grid grid-cols-12 gap-4 py-7" style="--d:.12s;">
             <span class="col-span-2 sm:col-span-1 text-[var(--faint)] text-[0.8rem] pt-0.5">C</span>
-            <div class="col-span-9 sm:col-span-10">
-              <p class="text-[0.9rem] tracking-[0.08em] uppercase text-paper group-hover:text-signal transition-colors duration-300">iOS app</p>
+            <div class="col-span-7 sm:col-span-8">
+              <p class="text-[0.9rem] tracking-[0.08em] uppercase text-[var(--muted)]">iOS app</p>
               <p class="mt-2 text-[0.95rem] leading-relaxed text-[var(--muted)] font-sans">Private AI in your pocket, built with the same discipline this site preaches.</p>
             </div>
-            <span class="col-span-1 text-right text-[var(--faint)] group-hover:text-signal transition-colors duration-300" aria-hidden="true">&nearr;</span>
-          </a>
+            <span class="col-span-3 text-right text-[0.65rem] tracking-[0.14em] text-[var(--faint)] pt-1">IN&nbsp;DEVELOPMENT</span>
+          </div>
 
-          <a href="#" class="ledger-row reveal grid grid-cols-12 gap-4 py-7 group" style="--d:.19s;">
+          <div class="ledger-row reveal grid grid-cols-12 gap-4 py-7" style="--d:.19s;">
             <span class="col-span-2 sm:col-span-1 text-[var(--faint)] text-[0.8rem] pt-0.5">D</span>
-            <div class="col-span-9 sm:col-span-10">
-              <p class="text-[0.9rem] tracking-[0.08em] uppercase text-paper group-hover:text-signal transition-colors duration-300">The Private AI Exposure Index</p>
+            <div class="col-span-7 sm:col-span-8">
+              <p class="text-[0.9rem] tracking-[0.08em] uppercase text-[var(--muted)]">The Private AI Exposure Index</p>
               <p class="mt-2 text-[0.95rem] leading-relaxed text-[var(--muted)] font-sans">Ongoing research measuring how exposed real-world private AI deployments are.</p>
             </div>
-            <span class="col-span-1 text-right text-[var(--faint)] group-hover:text-signal transition-colors duration-300" aria-hidden="true">&nearr;</span>
-          </a>
+            <span class="col-span-3 text-right text-[0.65rem] tracking-[0.14em] text-[var(--faint)] pt-1">RESEARCH&nbsp;UNDERWAY</span>
+          </div>
 
-          <a href="#" class="ledger-row reveal grid grid-cols-12 gap-4 py-7 group" style="--d:.26s;">
+          <div class="ledger-row reveal grid grid-cols-12 gap-4 py-7" style="--d:.26s;">
             <span class="col-span-2 sm:col-span-1 text-[var(--faint)] text-[0.8rem] pt-0.5">E</span>
-            <div class="col-span-9 sm:col-span-10">
-              <p class="text-[0.9rem] tracking-[0.08em] uppercase text-paper group-hover:text-signal transition-colors duration-300">AI Security Foundations &mdash; free course</p>
-              <p class="mt-2 text-[0.95rem] leading-relaxed text-[var(--muted)] font-sans">Start here. The baseline every team should clear before a single weight is loaded.</p>
+            <div class="col-span-7 sm:col-span-8">
+              <p class="text-[0.9rem] tracking-[0.08em] uppercase text-[var(--muted)]">AI Security Foundations &mdash; free course</p>
+              <p class="mt-2 text-[0.95rem] leading-relaxed text-[var(--muted)] font-sans">The baseline every team should clear before a single weight is loaded.</p>
             </div>
-            <span class="col-span-1 text-right text-[var(--faint)] group-hover:text-signal transition-colors duration-300" aria-hidden="true">&nearr;</span>
-          </a>
+            <span class="col-span-3 text-right text-[0.65rem] tracking-[0.14em] text-[var(--faint)] pt-1">SHIPPING&nbsp;JULY&nbsp;2026</span>
+          </div>
         </div>
       </div>
     </div>
@@ -718,18 +719,19 @@ a.text-link:hover{ color: var(--signal); border-color: var(--signal-dim); }
         </p>
 
         <!-- ==================================================
-             INTEGRATION PLACEHOLDERS — replace before launch:
-             1. Cal.com : swap href below for your event link,
-                          e.g. https://cal.com/joeyvictorino/readiness
-             2. Stripe  : swap href for your Payment Link,
-                          e.g. https://buy.stripe.com/XXXX (Deal Desk prepay)
+             BOOKING & PAYMENT — current state:
+             - Booking runs on email until the Cal.com event exists.
+               SWAP: replace the mailto href below with
+               https://cal.com/<handle>/readiness and change the
+               label back to "Open the calendar".
+             - The "Prepay the Deal Desk" button is intentionally
+               absent until a real Stripe Payment Link exists.
+               ADD: <a href="https://buy.stripe.com/XXXX"
+                       class="btn btn-ghost magnetic">Prepay the Deal Desk</a>
              ================================================== -->
         <div class="reveal mt-10 flex flex-wrap gap-4" style="--d:.22s;">
-          <a href="#" data-placeholder="CAL_COM_LINK" class="btn btn-primary magnetic">
-            Open the calendar <span class="tick" aria-hidden="true">&rarr;</span>
-          </a>
-          <a href="#" data-placeholder="STRIPE_PAYMENT_LINK" class="btn btn-ghost magnetic">
-            Prepay the Deal Desk
+          <a href="mailto:joey.victorino@gmail.com?subject=Readiness%20Call" class="btn btn-primary magnetic">
+            Book by email <span class="tick" aria-hidden="true">&rarr;</span>
           </a>
         </div>
 
@@ -738,9 +740,8 @@ a.text-link:hover{ color: var(--signal); border-color: var(--signal-dim); }
         </p>
       </div>
 
-      <!-- inquiry form -->
-      <!-- TODO: point action at your form handler (Formspree / Cloudflare Worker / etc.) -->
-      <form class="reveal flex flex-col gap-8 md:pt-4" style="--d:.18s;" action="#" method="post">
+      <!-- inquiry form — handled by the site Worker, stored in KV -->
+      <form class="reveal flex flex-col gap-8 md:pt-4" style="--d:.18s;" action="/api/inquiry" method="post">
         <div>
           <label for="f-name" class="font-mono text-[0.7rem] tracking-[0.16em] uppercase text-[var(--faint)]">Name</label>
           <input id="f-name" name="name" type="text" required autocomplete="name" class="field mt-1" placeholder="Your name">
