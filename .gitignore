@@ -3,3 +3,5 @@ launch/
 claude-code-goal.md
 index.previous.html
 .DS_Store
+# paid products — never publish to the public repo or the live site without a paywall
+products/

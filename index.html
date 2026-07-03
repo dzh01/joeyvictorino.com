@@ -382,7 +382,7 @@ a.text-link:hover{ color: var(--signal); border-color: var(--signal-dim); }
 
     <div class="reveal mt-12 flex flex-wrap items-center gap-4" style="--d:.24s;">
       <a href="#contact" class="btn btn-primary magnetic">
-        Book a Readiness Call <span class="tick" aria-hidden="true">&rarr;</span>
+        Request a Readiness Call <span class="tick" aria-hidden="true">&rarr;</span>
       </a>
       <a href="checklist.html" class="btn btn-ghost magnetic">
         Read the free Hardening Checklist
@@ -710,7 +710,7 @@ a.text-link:hover{ color: var(--signal); border-color: var(--signal-dim); }
     <div class="grid md:grid-cols-2 gap-16 mt-6">
       <div>
         <h2 class="display reveal" style="--d:.06s; font-size:var(--step-3); max-width:16ch;">
-          Book a Readiness Call.
+          Request a Readiness Call.
         </h2>
         <p class="reveal measure mt-8 text-[var(--muted)]" style="--d:.14s;">
           Thirty minutes. Bring your architecture, your quote, or your doubt.
@@ -720,22 +720,25 @@ a.text-link:hover{ color: var(--signal); border-color: var(--signal-dim); }
 
         <!-- ==================================================
              BOOKING & PAYMENT — current state:
-             - Booking runs on email until the Cal.com event exists.
-               SWAP: replace the mailto href below with
-               https://cal.com/<handle>/readiness and change the
-               label back to "Open the calendar".
+             - Booking is self-hosted: the form at right POSTs to the
+               site Worker (/api/inquiry), which stores the request +
+               preferred time in KV and returns a confirmation page.
+               No third-party calendar dependency.
+               OPTIONAL SWAP to Cal.com later: replace the form with a
+               <a href="https://cal.com/<handle>/readiness"> button, or
+               keep both.
              - The "Prepay the Deal Desk" button is intentionally
-               absent until a real Stripe Payment Link exists.
-               ADD: <a href="https://buy.stripe.com/XXXX"
-                       class="btn btn-ghost magnetic">Prepay the Deal Desk</a>
+               absent until a real Stripe Payment Link exists (needs
+               Joey's Stripe account — cannot be created programmatically).
+               ADD when ready: <a href="https://buy.stripe.com/XXXX"
+                 class="btn btn-ghost magnetic">Prepay the Deal Desk &mdash; $750</a>
              ================================================== -->
-        <div class="reveal mt-10 flex flex-wrap gap-4" style="--d:.22s;">
-          <a href="mailto:joey.victorino@gmail.com?subject=Readiness%20Call" class="btn btn-primary magnetic">
-            Book by email <span class="tick" aria-hidden="true">&rarr;</span>
-          </a>
-        </div>
+        <p class="reveal font-mono text-[0.7rem] tracking-[0.16em] uppercase text-[var(--faint)] mt-10" style="--d:.22s;">
+          Use the form &rarr; &middot; or email
+          <a href="mailto:joey.victorino@gmail.com?subject=Readiness%20Call" class="text-link">joey.victorino@gmail.com</a>
+        </p>
 
-        <p class="reveal font-mono text-[0.7rem] tracking-[0.14em] text-[var(--faint)] mt-10" style="--d:.3s;">
+        <p class="reveal font-mono text-[0.7rem] tracking-[0.14em] text-[var(--faint)] mt-6" style="--d:.3s;">
           PGP available on request &middot; NDAs welcome
         </p>
       </div>
@@ -754,8 +757,12 @@ a.text-link:hover{ color: var(--signal); border-color: var(--signal-dim); }
           <label for="f-context" class="font-mono text-[0.7rem] tracking-[0.16em] uppercase text-[var(--faint)]">Context</label>
           <input id="f-context" name="context" type="text" class="field mt-1" placeholder="One line on what you're deploying">
         </div>
-        <button type="submit" class="btn btn-ghost magnetic self-start mt-2">
-          Send inquiry <span class="tick" aria-hidden="true">&rarr;</span>
+        <div>
+          <label for="f-slot" class="font-mono text-[0.7rem] tracking-[0.16em] uppercase text-[var(--faint)]">Preferred times</label>
+          <input id="f-slot" name="slot" type="text" class="field mt-1" placeholder="e.g. Tue/Thu afternoons ET">
+        </div>
+        <button type="submit" class="btn btn-primary magnetic self-start mt-2">
+          Request the call <span class="tick" aria-hidden="true">&rarr;</span>
         </button>
       </form>
     </div>
